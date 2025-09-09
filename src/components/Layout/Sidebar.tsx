@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   HomeIcon, 
   ChartBarIcon, 
@@ -7,7 +7,11 @@ import {
   ChevronLeftIcon, 
   ChevronRightIcon,
   ShoppingCartIcon,
-  ClipboardListIcon
+  ClipboardIcon,
+  UsersIcon,
+  CubeIcon,
+  ArchiveBoxIcon,
+  BuildingOfficeIcon
 } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 
@@ -17,35 +21,40 @@ interface SidebarItem {
   to: string;
 }
 
-const Sidebar: React.FC = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+interface SidebarProps {
+  isCollapsed: boolean;
+  onToggle: () => void;
+}
 
+const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
   const sidebarItems: SidebarItem[] = [
     { icon: HomeIcon, label: 'داشبورد', to: '/dashboard' },
     { icon: DocumentTextIcon, label: 'محصولات', to: '/products' },
+    { icon: CubeIcon, label: 'مدیریت محصولات', to: '/product-management' },
     { icon: ShoppingCartIcon, label: 'تراکنش‌ها', to: '/transactions' },
     { icon: ChartBarIcon, label: 'گزارشات', to: '/reports' },
-    { icon: ClipboardListIcon, label: 'موجودی انبار', to: '/inventory' },
+    { icon: ClipboardIcon, label: 'موجودی انبار', to: '/inventory' },
+    { icon: ArchiveBoxIcon, label: 'مدیریت موجودی', to: '/inventory-management' },
+    { icon: BuildingOfficeIcon, label: 'مدیریت انبارها', to: '/warehouse-management' },
+    { icon: UsersIcon, label: 'مدیریت کاربران', to: '/users' },
     { icon: CogIcon, label: 'تنظیمات', to: '/settings' },
   ];
-
-  const toggleSidebar = () => {
-    setIsCollapsed(!isCollapsed);
-  };
 
   return (
     <div 
       className={`
-        bg-gray-800 text-white h-screen transition-all duration-300 ease-in-out
+        bg-gray-800 text-white transition-all duration-300 ease-in-out
+        fixed lg:sticky top-0 right-0 h-screen z-50
         ${isCollapsed ? 'w-16' : 'w-64'}
-        fixed right-0 top-0 flex flex-col z-50
+        ${isCollapsed ? 'lg:w-16' : 'lg:w-64'}
+        flex flex-col
       `}
     >
       <div className="flex items-center justify-between p-4 border-b border-gray-700">
         {!isCollapsed && <h2 className="text-xl font-bold">منو</h2>}
         <button 
-          onClick={toggleSidebar} 
-          className="hover:bg-gray-700 p-2 rounded-full transition"
+          onClick={onToggle} 
+          className="hover:bg-gray-700 p-2 rounded-full transition mr-auto"
         >
           {isCollapsed ? (
             <ChevronLeftIcon className="h-6 w-6" />
