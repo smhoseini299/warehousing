@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'mobile': '0px',
+        'desktop': '1024px',
+      },
       fontFamily: {
         'sans': ['Vazirmatn', 'ui-sans-serif', 'system-ui'],
       },

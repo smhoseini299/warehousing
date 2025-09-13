@@ -30,7 +30,7 @@ export default function Header({ onToggleSidebar }: { onToggleSidebar: () => voi
         <div className="flex items-center space-x-reverse space-x-4">
           <button 
             onClick={onToggleSidebar} 
-            className="text-gray-600 hover:text-gray-900 focus:outline-none lg:hidden"
+            className="text-gray-600 hover:text-gray-900 focus:outline-none block lg:hidden"
           >
             <Menu className="h-6 w-6" />
           </button>

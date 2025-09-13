@@ -11,7 +11,8 @@ import {
   UsersIcon,
   CubeIcon,
   ArchiveBoxIcon,
-  BuildingOfficeIcon
+  BuildingOfficeIcon,
+  XMarkIcon // Add close icon
 } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 
@@ -45,16 +46,26 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
       className={`
         bg-gray-800 text-white transition-all duration-300 ease-in-out
         fixed lg:sticky top-0 right-0 h-screen z-50
-        ${isCollapsed ? 'w-16' : 'w-64'}
-        ${isCollapsed ? 'lg:w-16' : 'lg:w-64'}
+        ${isCollapsed ? 'w-16 lg:w-16' : 'w-64 lg:w-64'}
+        ${isCollapsed ? 'mobile:hidden lg:block' : 'mobile:block lg:block'}
         flex flex-col
       `}
     >
       <div className="flex items-center justify-between p-4 border-b border-gray-700">
         {!isCollapsed && <h2 className="text-xl font-bold">منو</h2>}
+        
+        {/* Mobile Close Button */}
         <button 
           onClick={onToggle} 
-          className="hover:bg-gray-700 p-2 rounded-full transition mr-auto"
+          className="hover:bg-gray-700 p-2 rounded-full transition mr-auto block lg:hidden"
+        >
+          <XMarkIcon className="h-6 w-6" />
+        </button>
+
+        {/* Desktop Collapse/Expand Button */}
+        <button 
+          onClick={onToggle} 
+          className="hover:bg-gray-700 p-2 rounded-full transition mr-auto hidden lg:block"
         >
           {isCollapsed ? (
             <ChevronLeftIcon className="h-6 w-6" />
@@ -64,7 +75,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
         </button>
       </div>
 
-      <nav className="flex-1 overflow-y-auto">
+      <nav 
+        className="flex-1 overflow-y-auto custom-scrollbar"
+        style={{
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'rgba(255,255,255,0.2) transparent'
+        }}
+      >
         {sidebarItems.map((item, index) => (
           <NavLink
             key={index}
@@ -75,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
               ${isCollapsed ? 'justify-center' : ''}
             `}
           >
-            <item.icon className="h-6 w-6 ml-2" />
+            <item.icon className={`h-6 w-6 ${!isCollapsed ? 'ml-2' : ''}`} />
             {!isCollapsed && <span>{item.label}</span>}
           </NavLink>
         ))}

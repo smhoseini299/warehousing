@@ -37,7 +37,13 @@ const App: React.FC = () => {
 
   // Toggle Sidebar
   const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
+    // On mobile, fully toggle visibility
+    if (window.innerWidth < 1024) {
+      setIsSidebarCollapsed(!isSidebarCollapsed);
+    } else {
+      // On desktop, just collapse/expand
+      setIsSidebarCollapsed(!isSidebarCollapsed);
+    }
   };
 
   return (
